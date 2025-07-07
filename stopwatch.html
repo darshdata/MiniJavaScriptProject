@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/stopwatch.css">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="box mx-auto">
+            <div class="col">
+                <h1>StopWatch</h1>
+            </div>
+            
+                <div class="box2">
+                    <span id="minute">00 </span>:
+                    <span id="second">00 </span>:
+                    <span id="millisecond">00</span>
+                </div>
+            
+            <div>
+                <button onclick="start()" id="start">Start</button>
+                <button onclick="stop()" id="stop">Stop</button>
+                <button onclick="reset()" id="reset">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+        let min = 0;
+        let sec = 0;
+        let mill = 0;
+        let timer = false;
+
+        start = () =>{
+            if(!timer)
+            {
+                timer = true;
+                stopwatch();
+            }
+        }
+
+        stop = () =>{
+            if(timer)
+            {
+                timer = false;
+            }
+        }
+
+        reset = () => {
+            min = 0;
+            sec = 0;
+            mill = 0;
+            timer = false;
+            updatevalue();
+        }
+
+        updatevalue = () =>{
+            document.getElementById("minute").innerHTML = String(min).padStart(2, "0");
+            document.getElementById("second").innerHTML = String(sec).padStart(2, "0");
+            document.getElementById("millisecond").innerHTML = String(mill).padStart(2, "0");
+        }
+
+        stopwatch = () => {
+            if(timer == true)
+            {
+                mill++;
+                if(mill == 100)
+                {
+                    sec++;
+                    mill = 0;
+                }
+                if(sec == 60)
+                {
+                    min++;
+                    sec = 0;
+                }
+                updatevalue();
+                setTimeout(stopwatch, 10);
+            }
+        }
+    </script>
+</body>
+</html>

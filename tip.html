@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tip Calculator</title>
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="css/tip.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="box">
+            <h1>Smart Tip Calculator</h1>
+            <div class="input-section">
+              <div class="input">
+                <label for="bill">Enter Your Food Bill</label><br />
+                <input type="number" id="bills" placeholder="Food Amount" />
+
+                <div class="tip-buttons">
+                    <label for="tipper">Select Tip percentage</label><br>
+                  <button class="tip-btn" onclick="selectTip(5)">5%</button>
+                  <button class="tip-btn" onclick="selectTip(10)">10%</button>
+                  <button class="tip-btn" onclick="selectTip(20)">20%</button>
+                </div>
+                <input
+                  type="number"
+                  placeholder="Or Enter Custom Tip %"
+                  id="tipper"
+                />
+
+                <label for="people">Enter Persons to Split the Bill</label><br />
+                <input type="number" id="people" placeholder="Number of People" />
+
+                <div class="btns">
+                    <button onclick="calcBill()" id="calculate">Calculate</button>
+                    <button onclick="resetCalculator()" id="reset">Reset</button>
+                </div>
+
+                <div class="results">
+                    <h2 id="tip"></h2>
+                    <h2 id="bill"></h2>
+                    <h2 id="spill"></h2>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+
+        let selectedTipPercent = 0;
+
+        function selectTip(percentage) {
+            selectedTipPercent = percentage;
+            document.getElementById('tipper').value = percentage;
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tip-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function resetCalculator() {
+            // Clear all input fields
+            document.getElementById('bills').value = '';
+            document.getElementById('tipper').value = '';
+            document.getElementById('people').value = '';
+            
+            // Remove active class from tip buttons
+            document.querySelectorAll('.tip-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Hide all result elements
+            document.getElementById("tip").style.display = "none";
+            document.getElementById("bill").style.display = "none";
+            document.getElementById("spill").style.display = "none";
+            
+            // Reset selected tip percentage
+            selectedTipPercent = 0;
+        }
+
+        calcBill = () =>{
+            var foodbill = document.getElementById("bills").value
+            var tippercent = document.getElementById("tipper").value
+            var split = document.getElementById("people").value
+
+            if (!foodbill || !tippercent || !split) {
+                alert("Please fill in all fields");
+                return;
+            }
+
+            var ttlbill = parseInt(foodbill) + (parseInt(foodbill)*parseInt(tippercent)/100)
+            var tipamt = parseInt(foodbill)*parseInt(tippercent)/100;
+            var spltbill = ttlbill/split;
+
+            // Show all result elements
+            document.getElementById("tip").style.display = "block";
+            document.getElementById("bill").style.display = "block";
+            document.getElementById("spill").style.display = "block";
+
+            if(split == 0 || split == 1)
+            {
+                document.getElementById("tip").innerHTML=`Tip Amount : ${tipamt} Rs`
+                document.getElementById("bill").innerHTML=`Total Bill : ${ttlbill} Rs`
+                document.getElementById("spill").style.display = "none";
+            }
+            else{
+                var spltbill = ttlbill/split;
+                document.getElementById("tip").innerHTML=`Tip Amount : ${tipamt} Rs`
+                document.getElementById("spill").innerHTML=`Per Person : ${spltbill.toFixed(2)} Rs`
+                document.getElementById("bill").innerHTML=`Total Bill : ${ttlbill} Rs`
+            }
+        }
+
+        // Hide results initially
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById("tip").style.display = "none";
+            document.getElementById("bill").style.display = "none";
+            document.getElementById("spill").style.display = "none";
+        });
+    </script>
+
+
+  </body>
+</html>

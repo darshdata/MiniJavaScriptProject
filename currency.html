@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="css/currency.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="col-12 col-md-12 col-sm-12 col-lg-12 box">
+        <h1>Currency Breakdown</h1>
+        <p>Calculate the minimum number of notes needed</p>
+        <br />
+        <div class="form-group">
+          <label for="amount"> Enter Amount : </label>
+          <input
+            type="number"
+            class="col-12 col-sm-12 col-md-12 col-lg-12 form-control"
+            id="amount"
+            placeholder="Enter Amount here.."
+          />
+          <br />
+          <button onclick="calculate()">Calculate Breakdown</button>
+            </div>
+          
+        <br />
+            <div id="Result" class="col-12 col-sm-12 col-md-12 col-lg-12 Result hide">
+            <div class="total-amount" id="totalAmount"></div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 currency-item" id="twoThousand">
+            <div class="currency-note" id="twoT"></div>
+            <div class="currency-total" id="twoTH"></div>
+            <div class="currency-remaining" id="cur1"></div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 currency-item" id="fiveHundred">
+            <div class="currency-note" id="fiveH"></div>
+            <div class="currency-total" id="fiveH1"></div>
+            <div class="currency-remaining" id="cur2"></div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 currency-item" id="twoHundred">
+            <div class="currency-note" id="twoH"></div>
+            <div class="currency-total" id="twoH1"></div>
+            <div class="currency-remaining" id="cur3"></div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 currency-item" id="oneHundred">
+            <div class="currency-note" id="oneH"></div>
+            <div class="currency-total" id="oneH1"></div>
+            <div class="currency-remaining" id="cur4"></div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 currency-item" id="fifty">
+            <div class="currency-note" id="fiveT"></div>
+            <div class="currency-total" id="fiveT1"></div>
+            <div class="currency-remaining" id="cur5"></div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 currency-item" id="twenty">
+            <div class="currency-note" id="two"></div>
+            <div class="currency-total" id="two1"></div>
+            <div class="currency-remaining" id="cur6"></div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 currency-item" id="ten">
+            <div class="currency-note" id="ten"></div>
+            <div class="currency-total" id="ten1"></div>
+            <div class="currency-remaining" id="cur7"></div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 currency-item" id="one">
+            <div class="currency-note" id="one"></div>
+            <div class="currency-total" id="one1"></div>
+            <div class="currency-remaining" id="cur8"></div>
+          </div>
+
+          <div id="resetbtnwrapper" class="col-12 col-sm-12 col-md-12 col-lg-12 hide">
+              <button onclick="resetBreakdown()" id="reset">Reset</button>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+
+    <script>
+
+        calculate = () => {
+
+            //GET THE AMOUNT FROM INPUT
+            var amount = parseInt(document.getElementById("amount").value);
+            
+            if(!amount || amount <= 0){
+                alert("Please enter a valid amount!");
+                return;
+            }
+
+            //SHOW RESULT SECTION
+            const resultSection = document.getElementById("Result");
+            resultSection.classList.remove("hide");
+            resultSection.classList.add("show");
+
+            //RESET BUTTON
+            document.getElementById("resetbtnwrapper").classList.remove("hide");
+            document.getElementById("resetbtnwrapper").classList.add("show");
+            
+            //DISPLAY TOTAL AMOUNT
+            document.getElementById("totalAmount").innerHTML = `Total Amount: ₹${amount.toLocaleString()}`;
+            
+            //CALC 2000 NOTES
+            var notes2000 = Math.floor(amount / 2000);
+            var remaining = amount % 2000;
+            updateCurrencyItem("twoThousand", "twoT", "twoTH", "cur1", notes2000, 2000, remaining);
+            
+            //CALC 500 NOTES
+            var notes500 = Math.floor(remaining / 500);
+            remaining = remaining % 500;
+            updateCurrencyItem("fiveHundred", "fiveH", "fiveH1", "cur2", notes500, 500, remaining);
+            
+            //CALC 200 NOTES
+            var notes200 = Math.floor(remaining / 200);
+            remaining = remaining % 200;
+            updateCurrencyItem("twoHundred", "twoH", "twoH1", "cur3", notes200, 200, remaining);
+            
+            //CALC 100 NOTES
+            var notes100 = Math.floor(remaining / 100);
+            remaining = remaining % 100;
+            updateCurrencyItem("oneHundred", "oneH", "oneH1", "cur4", notes100, 100, remaining);
+            
+            //CALC 50 NOTES
+            var notes50 = Math.floor(remaining / 50);
+            remaining = remaining % 50;
+            updateCurrencyItem("fifty", "fiveT", "fiveT1", "cur5", notes50, 50, remaining);
+            
+            //CALC 20 NOTES
+            var notes20 = Math.floor(remaining / 20);
+            remaining = remaining % 20;
+            updateCurrencyItem("twenty", "two", "two1", "cur6", notes20, 20, remaining);
+            
+            //CALC 10 NOTES
+            var notes10 = Math.floor(remaining / 10);
+            remaining = remaining % 10;
+            updateCurrencyItem("ten", "ten", "ten1", "cur7", notes10, 10, remaining);
+            
+            //CALC 1 NOTES
+            var notes1 = Math.floor(remaining / 1);
+            remaining = remaining % 1;
+            updateCurrencyItem("one", "one", "one1", "cur8", notes1, 1, remaining);
+        }
+
+        //add enter key support
+            document.getElementById("amount").addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    calculate();
+                }
+            });
+
+
+        function updateCurrencyItem(containerId, noteId, totalId, remainingId, notes, denomination, remaining) {
+            var container = document.getElementById(containerId);
+            var noteElement = document.getElementById(noteId);
+            var totalElement = document.getElementById(totalId);
+            var remainingElement = document.getElementById(remainingId);
+
+            if (notes > 0) {
+                noteElement.innerHTML = `${denomination} ₹ Note: ${notes}`;
+                totalElement.innerHTML = `Total: ₹${(notes * denomination).toLocaleString()}`;
+                remainingElement.innerHTML = `Remaining: ₹${remaining.toLocaleString()}`;
+                container.classList.remove("zero");
+            } else {
+                noteElement.innerHTML = `${denomination} ₹ Note: 0`;
+                totalElement.innerHTML = `Total: ₹0`;
+                remainingElement.innerHTML = `Remaining: ₹${remaining.toLocaleString()}`;
+                container.classList.add("zero");
+            }
+        }
+
+        if(note == 0)
+        {
+            blur = document.getElementById("Result");
+            blur.classList.add("zero");
+        }
+
+    function resetBreakdown() {
+        window.location.reload();
+        document.getElementById("resetbtnwrapper").classList.remove("show");
+        document.getElementById("resetbtnwrapper").classList.add("hide");
+     }
+
+     //SHOW RESET SECTION
+            const resetSection = document.getElementById("Reset ");
+            resetSection.classList.remove("hide");
+            resetSection.classList.add("show");
+            
+
+    </script>
+  </body>
+</html>

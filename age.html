@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="css/age.css">
+
+</head>
+<body>
+    
+    <div class="container">
+        <div class="box">
+            <h1>Age Calculator</h1>
+            <p>Enter Your Birth Date</p>
+            <div class="input-group mb-3">
+                <input type="date" class="form-control" id="date" placeholder="Date" aria-label="Date" aria-describedby="button-addon2">
+                <br><br>
+                <button onclick="age()">Calculate Age</button>
+
+               </div>
+
+            <div class="result">
+                <div class="input-result hide"></div>
+                <button onclick="resetAge()" class="reset-btn hide">Reset</button>
+            </div>
+            
+    </div>
+    </div>
+
+    <script>
+
+            age = () =>{
+            let birthDate = new Date(document.getElementById("date").value);
+            let currentDate = new Date();
+            let age = currentDate.getFullYear() - birthDate.getFullYear();
+        
+            const resultdiv = document.querySelector(".input-result");
+            const resetdiv = document.querySelector(".reset-btn");
+
+            resultdiv.classList.remove("hide");
+            document.querySelector(".input-result").innerHTML = `Your age is ${age} years`;
+
+            resetdiv.classList.remove("hide");
+        }
+
+        
+        
+        resetAge = () =>{
+            document.getElementById("date").value = "";
+            document.querySelector(".input-result").classList.add("hide");
+            document.querySelector(".reset-btn").classList.add("hide");
+        }
+
+    </script>
+</body>
+</html>
