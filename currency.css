@@ -10,9 +10,20 @@ body{
     background: linear-gradient(
         to right,rgb(86, 86, 199),rgb(48, 120, 169)
     );
-
 }
 
+input{
+    width: 100%;
+    padding: 10px;
+    border-radius:10px;
+    border: 0px solid;
+    box-shadow: 0px 0px 5px rgba(6, 1, 102, 0.708);
+    margin: 10px;
+    justify-self: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgb(149, 149, 149);
+}
 .hide{
     display: none;
 }
