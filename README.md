@@ -37,6 +37,7 @@ Functional stopwatch with **Start**, **Stop**, and **Reset** options. Built with
 
 ## 🖥️ Live Demo
 
+ Live - https://darshdata.github.io/MiniJavaScriptProject/
 
 ---
 
