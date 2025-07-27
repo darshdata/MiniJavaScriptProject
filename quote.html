@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quote of the Day</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #3a5effe0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    .quote {
+      font-size: 20px;
+      line-height: 1.6;
+      margin: 20px 0;
+      position: relative;
+      padding: 0 10px;
+      color: #333;
+    }
+
+    .quote::before,
+    .quote::after {
+      content: '"';
+      font-size: 30px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .author {
+      font-style: italic;
+      color: #555;
+      text-align: right;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .left-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn-icon {
+      width: 45px;
+      height: 45px;
+      border: 2px solid #3a5eff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.3s;
+      color: #3a5eff;
+      font-size: 18px;
+    }
+
+    .btn-icon:hover {
+      background: #3a5eff;
+      color: white;
+    }
+
+    .new-quote-btn {
+      background: #3a5eff;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .new-quote-btn:hover {
+      background: #234adc;
+    }
+
+    @media (max-width: 480px) {
+      .quote {
+        font-size: 18px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      .author {
+        font-size: 14px;
+      }
+
+      .btn-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+
+      .new-quote-btn {
+        width: 100%;
+        font-size: 15px;
+        padding: 10px 0;
+      }
+
+      .buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .left-buttons {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Quote of the Day</h2>
+    <div class="quote" id="quote">Loading...</div>
+    <div class="author" id="author">—</div>
+
+    <div class="buttons">
+      <div class="left-buttons">
+        <div class="btn-icon" onclick="copyQuote()">📋</div>
+      </div>
+      <button class="new-quote-btn" onclick="newQuote()">New Quote</button>
+    </div>
+  </div>
+
+  <script>
+    const quotes = [
+      {
+        quote: "Never give up because you never know if the next try is going to be the one that works.",
+        author: "Mary Kay Ash"
+      },
+      {
+        quote: "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        author: "Winston Churchill"
+      },
+      {
+        quote: "Life is what happens when you're busy making other plans.",
+        author: "John Lennon"
+      },
+      {
+        quote: "Believe you can and you're halfway there.",
+        author: "Theodore Roosevelt"
+      },
+      {
+        quote: "Don't watch the clock; do what it does. Keep going.",
+        author: "Sam Levenson"
+      }
+    ];
+
+    const quoteEl = document.getElementById('quote');
+    const authorEl = document.getElementById('author');
+
+    function newQuote() {
+      const random = quotes[Math.floor(Math.random() * quotes.length)];
+      quoteEl.textContent = random.quote;
+      authorEl.textContent = "— " + random.author;
+    }
+
+    function copyQuote() {
+      const text = `"${quoteEl.textContent}"\n${authorEl.textContent}`;
+      navigator.clipboard.writeText(text);
+      alert("Quote copied to clipboard!");
+    }
+
+    // Load a quote when page opens
+    newQuote();
+  </script>
+</body>
+</html>
